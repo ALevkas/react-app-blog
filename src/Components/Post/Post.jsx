@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Comments } from '../Comment/Comments';
 
 import './posts.scss';
@@ -8,17 +8,17 @@ import { Preloader } from '../Preloader/Preloader';
 import { getComments } from '../../http/userApi';
 import { createComment } from '../../http/userApi';
 
-
 export const Post = (props) => {
     const [userValue, setUserValue] = useState();
     const [userAct, setUserAct] = useState();
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [lastValue, setLastValue] = useState(null);
+
+    const [lastValue, setLastValue] = useState(props.content);
 
     const getLastValue = (value) => {
         setLastValue(value);
-    }
+    };
 
     const getNewValue = () => {
         let newValue = null;
@@ -36,9 +36,11 @@ export const Post = (props) => {
                 case '/':
                     newValue = lastValue / +userValue;
                     return newValue;
+                default:
+                    return lastValue;
             }
         }
-    }
+    };
 
     const getAllComments = async () => {
         setLoading(true);
@@ -53,11 +55,13 @@ export const Post = (props) => {
         const content = getNewValue();
         const response = await createComment(props._id, content);
         if (response.status === 200) {
-           getAllComments();
+            getAllComments();
         }
     };
 
-    useEffect(()=>{getAllComments()}, [])
+    useEffect(() => {
+        getAllComments();
+    }, []);
 
     return (
         <div className='card horizontal'>
@@ -67,13 +71,23 @@ export const Post = (props) => {
                     <p>Message: {props.content}</p>
                 </div>
                 <div className='card-action'>
-                {
-                    loading ? <Preloader /> : <Comments postId={props._id} comments={comments} getAllComments={getAllComments} getLastValue={getLastValue}/>
-                }
-
+                    {loading ? (
+                        <Preloader />
+                    ) : (
+                        <Comments
+                            postId={props._id}
+                            comments={comments}
+                            getAllComments={getAllComments}
+                            getLastValue={getLastValue}
+                        />
+                    )}
                 </div>
                 <div className='card-action'>
-                    <p> Последнее значение: {lastValue}, выберите действие и введите число, затем нажмите кнопку ответить</p>
+                    <p>
+                        {' '}
+                        Последнее значение: {lastValue}, выберите действие и
+                        введите число, затем нажмите кнопку ответить
+                    </p>
                     <div className='input-field col s12'>
                         <select
                             className='browser-default'
@@ -98,7 +112,14 @@ export const Post = (props) => {
                             onChange={(e) => setUserValue(e.target.value)}
                         />
                     </div>
-                    <button className='btn right' onClick={()=> {createNewComment()}}>Ответить</button>
+                    <button
+                        className='btn right'
+                        onClick={() => {
+                            createNewComment();
+                        }}
+                    >
+                        Ответить
+                    </button>
                 </div>
             </div>
         </div>

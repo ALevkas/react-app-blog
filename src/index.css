@@ -15,3 +15,9 @@ code {
 nav {
     padding: 0 1rem;
 }
+
+.create-post {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem;
+}

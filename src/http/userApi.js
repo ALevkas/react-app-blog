@@ -21,6 +21,14 @@ export const getPosts = async () => {
     return response;
 };
 
+export const createPost = async (title, content) => {
+    const response = await $authHost.post('post/create', {
+        title: title,
+        content: content,
+    });
+    return response;
+};
+
 export const getComments = async (id) => {
     const response = await $authHost.post('post/comments', {
         id: id,
