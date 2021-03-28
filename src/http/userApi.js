@@ -17,12 +17,12 @@ export const login = async (username, password) => {
 };
 
 export const getPosts = async () => {
-    const response = await $authHost.get('post/posts');
+    const response = await $host.get('post/posts');
     return response;
 };
 
 export const createPost = async (title, content) => {
-    const response = await $authHost.post('post/create', {
+    const response = await $host.post('post/create', {
         title: title,
         content: content,
     });
@@ -30,21 +30,21 @@ export const createPost = async (title, content) => {
 };
 
 export const getComments = async (id) => {
-    const response = await $authHost.post('post/comments', {
+    const response = await $host.post('post/comments', {
         id: id,
     });
     return response;
 };
 
 export const getComment = async (id) => {
-    const response = await $authHost.post('post/comment', {
+    const response = await $host.post('post/comment', {
         id: id,
     });
     return response;
 };
 
 export const createComment = async (postId, value) => {
-    const response = await $authHost.post('post/createComment', {
+    const response = await $host.post('post/createComment', {
         postId: postId,
         content: value,
     });

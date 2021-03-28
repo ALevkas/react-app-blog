@@ -4,6 +4,12 @@ import { getPosts, createPost } from '../../http/userApi';
 import { Posts } from '../Post/Posts';
 import { Preloader } from '../Preloader/Preloader';
 
+const getTokenUser = () => {
+    const token = window.sessionStorage.getItem('token');
+
+    return token ? token : null;
+};
+
 export const Home = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -13,6 +19,8 @@ export const Home = () => {
     const [content, setContent] = useState('');
 
     const [toggleNewPost, setToggleNewPost] = useState(false);
+
+    const [tokenUser, setTokenUser] = useState(getTokenUser());
 
     const getAllPosts = async () => {
         setLoading(true);
@@ -44,52 +52,57 @@ export const Home = () => {
                     posts={posts}
                     errorMessage={errorMessage}
                     getAllPosts={getAllPosts}
+                    tokenUser={tokenUser}
                 />
             ) : (
                 <Preloader />
             )}
 
-            {toggleNewPost ? (
-                <>
-                    {' '}
-                    <div className='post__create'>
-                        <div className='input-field col'>
-                            <input
-                                placeholder='Заголовок поста'
-                                id='first_name'
-                                type='text'
-                                className='validate'
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                            />
+            {tokenUser ? (
+                toggleNewPost ? (
+                    <>
+                        <div className='post__create'>
+                            <div className='input-field col'>
+                                <input
+                                    placeholder='Заголовок поста'
+                                    id='first_name'
+                                    type='text'
+                                    className='validate'
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                />
+                            </div>
+                            <div className='input-field col'>
+                                <input
+                                    placeholder='Стартовое число'
+                                    id='first_name'
+                                    type='text'
+                                    className='validate'
+                                    value={content}
+                                    onChange={(e) => setContent(e.target.value)}
+                                />
+                            </div>
                         </div>
-                        <div className='input-field col'>
-                            <input
-                                placeholder='Стартовое число'
-                                id='first_name'
-                                type='text'
-                                className='validate'
-                                value={content}
-                                onChange={(e) => setContent(e.target.value)}
-                            />
+                        <div className='create-post'>
+                            <button
+                                className='btn'
+                                onClick={() => createNewPost()}
+                            >
+                                Создать пост
+                            </button>
                         </div>
-                    </div>
+                    </>
+                ) : (
                     <div className='create-post'>
-                        <button className='btn' onClick={() => createNewPost()}>
+                        <button
+                            className='btn'
+                            onClick={() => setToggleNewPost(!toggleNewPost)}
+                        >
                             Создать пост
                         </button>
-                    </div>{' '}
-                </>
-            ) : (
-                <div className='create-post'>
-                    <button
-                        className='btn'
-                        onClick={() => setToggleNewPost(!toggleNewPost)}
-                    >
-                        Создать пост
-                    </button>
-                </div>
-            )}
+                    </div>
+                )
+            ) : null}
         </div>
     );
 };

@@ -14,7 +14,7 @@ export const Login = (props) => {
         const response = await login(username, password);
         if (response.status === 200) {
             window.sessionStorage.setItem('token', response.data.token);
-            history.push('/home');
+            history.push('/');
         }
     };
 

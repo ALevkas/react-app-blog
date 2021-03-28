@@ -83,43 +83,50 @@ export const Post = (props) => {
                     )}
                 </div>
                 <div className='card-action'>
-                    <p>
-                        {' '}
-                        Последнее значение: {lastValue}, выберите действие и
-                        введите число, затем нажмите кнопку ответить
-                    </p>
-                    <div className='input-field col s12'>
-                        <select
-                            className='browser-default'
-                            onChange={(e) => setUserAct(e.target.value)}
-                        >
-                            <option value='' disabled selected>
-                                Выберите действие
-                            </option>
-                            <option value='+'>+</option>
-                            <option value='-'>-</option>
-                            <option value='*'>*</option>
-                            <option value='/'>/</option>
-                        </select>
-                    </div>
-                    <div className='input-field col s6'>
-                        <input
-                            placeholder='Введите ваше число'
-                            id='first_name'
-                            type='number'
-                            className='validate'
-                            value={userValue}
-                            onChange={(e) => setUserValue(e.target.value)}
-                        />
-                    </div>
-                    <button
-                        className='btn right'
-                        onClick={() => {
-                            createNewComment();
-                        }}
-                    >
-                        Ответить
-                    </button>
+                    {props.tokenUser ? (
+                        <>
+                            <p>
+                                {' '}
+                                Последнее значение: {lastValue}, выберите
+                                действие и введите число, затем нажмите кнопку
+                                ответить
+                            </p>
+                            <div className='input-field col s12'>
+                                <select
+                                    className='browser-default'
+                                    onChange={(e) => setUserAct(e.target.value)}
+                                >
+                                    <option value='' disabled selected>
+                                        Выберите действие
+                                    </option>
+                                    <option value='+'>+</option>
+                                    <option value='-'>-</option>
+                                    <option value='*'>*</option>
+                                    <option value='/'>/</option>
+                                </select>
+                            </div>
+                            <div className='input-field col s6'>
+                                <input
+                                    placeholder='Введите ваше число'
+                                    id='first_name'
+                                    type='number'
+                                    className='validate'
+                                    value={userValue}
+                                    onChange={(e) =>
+                                        setUserValue(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <button
+                                className='btn right'
+                                onClick={() => {
+                                    createNewComment();
+                                }}
+                            >
+                                Ответить
+                            </button>
+                        </>
+                    ) : null}
                 </div>
             </div>
         </div>
