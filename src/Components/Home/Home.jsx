@@ -10,10 +10,10 @@ export const Home = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const getAllPosts = async () => {
+        setLoading(true);
         const response = await getPosts();
         if (response.status === 200) {
             setPosts(response.data);
-            console.log(posts);
         }
         setLoading(false);
     };
@@ -25,7 +25,7 @@ export const Home = () => {
     return (
         <div className='home'>
             {!loading ? (
-                <Posts posts={posts} errorMessage={errorMessage} />
+                <Posts posts={posts} errorMessage={errorMessage} getAllPosts={getAllPosts}/>
             ) : (
                 <Preloader />
             )}

@@ -13,7 +13,6 @@ export const Login = (props) => {
     const sendForm = async () => {
         const response = await login(username, password);
         if (response.status === 200) {
-            console.log(response.data);
             window.sessionStorage.setItem('token', response.data.token);
             history.push('/home');
         }

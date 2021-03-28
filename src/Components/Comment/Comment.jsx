@@ -11,6 +11,9 @@ export const Comment = (props) => {
         const response = await getComment(props.commentId);
         if (response.status === 200) {
             setComment(response.data);
+            if (props.isLast) {
+                props.getLastValue(response.data.content);
+            }
         }
         setLoading(false);
     };

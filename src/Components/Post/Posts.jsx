@@ -7,7 +7,7 @@ export const Posts = (props) => {
         <div className='post'>
             {props.posts.length ? (
                 props.posts.map((post) => {
-                    return <Post key={post._id} {...post} />;
+                    return <Post key={post._id} {...post} getAllPosts={props.getAllPosts}/>;
                 })
             ) : (
                 <NotFound

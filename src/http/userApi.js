@@ -34,3 +34,11 @@ export const getComment = async (id) => {
     });
     return response;
 };
+
+export const createComment = async (postId, value) => {
+    const response = await $authHost.post('post/createComment', {
+        postId: postId,
+        content: value,
+    });
+    return response;
+};
